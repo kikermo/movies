@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Movies"
+rootProject.name = "movies"
 
 // Modules
 include(":app")
