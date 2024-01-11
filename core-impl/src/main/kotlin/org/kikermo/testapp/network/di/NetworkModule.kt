@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,11 +19,15 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun providesOkHttpClient(): OkHttpClient {
+    fun providesOkHttpClient(
+        headerInterceptor: Interceptor
+    ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor).build()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(headerInterceptor)
+            .build()
     }
 
     @Provides
@@ -38,7 +43,6 @@ object NetworkModule {
     }
 
 
-
     @Provides
     @Singleton
     fun providesJsonConfig(
@@ -48,5 +52,17 @@ object NetworkModule {
         }
     }
 
+    @Provides
+    @Singleton
+    fun headersInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            val requestBuilder = chain.request().newBuilder()
+            requestBuilder.header("accept", "application/json")
+            requestBuilder.header("Authorization", "Bearer $BEARER_TOKEN")
+            chain.proceed(requestBuilder.build())
+        }
+    }
+
     private const val BASE_URL = "https://api.themoviedb.org/"
+    private const val BEARER_TOKEN = "<Your Key>"
 }

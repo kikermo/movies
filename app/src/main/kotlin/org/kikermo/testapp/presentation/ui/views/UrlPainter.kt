@@ -9,9 +9,11 @@ import coil.size.Size
 
 @Composable
 fun urlPainter(imageUrl: String) : AsyncImagePainter {
+     val baseImageURL = "https://image.tmdb.org/t/p/w500"
+
     return rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
+            .data(baseImageURL + imageUrl)
             .size(Size.ORIGINAL)
             .build()
     )
