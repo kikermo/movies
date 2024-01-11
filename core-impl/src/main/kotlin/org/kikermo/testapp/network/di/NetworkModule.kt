@@ -64,5 +64,5 @@ object NetworkModule {
     }
 
     private const val BASE_URL = "https://api.themoviedb.org/"
-    private const val BEARER_TOKEN = "<Your Key>"
+    private const val BEARER_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ODVhMDA3MzE5OTE5MDBjZjczMjg0YzM2OTZlNWM2ZiIsInN1YiI6IjY1OWUyNTNjMmNmZjE4MDA5NWJhNGY1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JksG-cCEXocx-TlHTdthkDCT52Oewnyqjs0sEuS3rYQ"
 }
